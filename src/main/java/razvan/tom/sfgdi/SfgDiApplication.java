@@ -4,6 +4,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 import razvan.tom.sfgdi.Controller.*;
+import razvan.tom.sfgdi.ExampleBeans.FakeDataSource;
+import razvan.tom.sfgdi.ExampleBeans.FakeJMSBroker;
 
 @SpringBootApplication
 public class SfgDiApplication {
@@ -11,36 +13,15 @@ public class SfgDiApplication {
 	public static void main(String[] args) {
 		ApplicationContext ctx = SpringApplication.run(SfgDiApplication.class, args);
 
-		I18nController i18nController = (I18nController) ctx.getBean("i18nController");
+		MyController controller = (MyController) ctx.getBean("myController");
 
-		System.out.println("--------- Spring Profiles");
+		FakeDataSource fakeDataSource = (FakeDataSource) ctx.getBean(FakeDataSource.class);
 
-		System.out.println(i18nController.sayHello());
+		System.out.println("Username: " + fakeDataSource.getUsername());
 
-		MyController myController = (MyController) ctx.getBean("myController");
+		FakeJMSBroker fakeJMSBroker = (FakeJMSBroker) ctx.getBean(FakeJMSBroker.class);
 
-		System.out.println("--------- Primary");
-
-		System.out.println(myController.getGreeting());
-
-		System.out.println("--------- Property");
-
-		PropertyInjectedController propertyInjectedController = (PropertyInjectedController) ctx.getBean("propertyInjectedController");
-
-		System.out.println(propertyInjectedController.getGreeting());
-
-		System.out.println("--------- Setter");
-
-		SetterInjectedController setterInjectedController = (SetterInjectedController) ctx.getBean("setterInjectedController");
-
-		System.out.println(setterInjectedController.getGreeting());
-
-		System.out.println("--------- Constructor");
-
-		ConstructorInjectedController constructorInjectedController = (ConstructorInjectedController) ctx.getBean("constructorInjectedController");
-
-		System.out.println(constructorInjectedController.getGreeting());
-
+		System.out.println("Username jms: " + fakeJMSBroker.getUsername());
 	}
 
 }
